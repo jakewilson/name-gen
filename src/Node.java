@@ -10,6 +10,22 @@ public class Node {
     private int numLettersSeen;
     private Hashtable<Character, Edge> edges;
 
+    public Node(char state) {
+        this.state = state;
+        this.numLettersSeen = 0;
+        this.edges = new Hashtable<Character, Edge>(); // initial capacity is 11
+    }
+
+    /**
+     * Updates the probabilities of all the edges of this node
+     */
+    public void updateProbabilities() {
+        for (Enumeration<Edge> e = edges.elements(); e.hasMoreElements(); ) {
+            Edge edge = e.nextElement();
+            edge.setProb(edge.getTimesSeen() / (this.numLettersSeen * 1.0f));
+        }
+    }
+
     public char getState() {
         return state;
     }
@@ -24,12 +40,6 @@ public class Node {
 
     public Hashtable<Character, Edge> getEdges() {
         return edges;
-    }
-
-    public Node(char state) {
-        this.state = state;
-        this.numLettersSeen = 0;
-        this.edges = new Hashtable<Character, Edge>(); // initial capacity is 11
     }
 
     @Override

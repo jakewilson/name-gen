@@ -3,11 +3,11 @@
  */
 public class Edge {
 
-    private int prob; // transition probability
+    private float prob; // transition probability
     private Node n; // the node this edge points to
     private int timesSeen; // number of times this node has been seen
 
-    public Edge(int prob, Node n) {
+    public Edge(float prob, Node n) {
         this.prob = prob;
         this.n = n;
         this.timesSeen = 0;
@@ -21,12 +21,20 @@ public class Edge {
         return n;
     }
 
-    public int getProb() {
+    public float getProb() {
         return prob;
     }
 
-    public void setProb(int prob) {
+    public void setProb(float prob) {
         this.prob = prob;
+    }
+
+    public int getTimesSeen() {
+        return timesSeen;
+    }
+
+    public void incTimesSeen() {
+        timesSeen++;
     }
 
     @Override
