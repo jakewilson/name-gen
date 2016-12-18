@@ -57,15 +57,14 @@ public class MarkovChain {
 
             // pick the edge whose probability matches
             Edge edge = null;
-            System.out.println("num: " + num);
             for (Enumeration<Edge> e = n.getEdges().elements(); e.hasMoreElements() && num > 0; )
                 num -= (edge = e.nextElement()).getProb() * 100;
 
-            System.out.println("edge: " + edge);
             n = edge.getNode();
             name += n.getState(); // add the character to the name
         }
 
+        // remove the ending '$'
         return name.substring(0, name.length() - 1);
     }
 
@@ -81,19 +80,6 @@ public class MarkovChain {
         }
 
         return ret;
-    }
-
-    public static void main(String[] args) {
-        MarkovChain mc = new MarkovChain();
-        mc.train("jake");
-        mc.train("matt");
-        mc.train("kelly");
-        mc.print();
-
-        System.out.println("\n-----------------\n" + mc.generate());
-        System.out.println("\n-----------------\n" + mc.generate());
-        System.out.println("\n-----------------\n" + mc.generate());
-        System.out.println("\n-----------------\n" + mc.generate());
     }
 
 }
