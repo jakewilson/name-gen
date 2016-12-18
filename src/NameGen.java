@@ -23,9 +23,8 @@ public class NameGen {
      */
     public void train(String path) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(path));
             Gson gson = new Gson();
-            String[] names = gson.fromJson(reader, String[].class);
+            String[] names = gson.fromJson(new BufferedReader(new FileReader(path)), String[].class);
             for (String s : names)
                 chain.train(s);
         } catch (FileNotFoundException e) {
