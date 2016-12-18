@@ -1,5 +1,6 @@
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * Created by jakewilson on 12/17/16.
@@ -47,8 +48,25 @@ public class MarkovChain {
      * @return the generated name
      */
     public String generate() {
-        // TODO
-        return "jerry";
+        Random r = new Random();
+        Node n = chain.get('^'); // start at the start state
+        String name = ""; // the name to generate
+
+        while (n.getState() != '$') {
+            int num = r.nextInt(100) + 1; // generate random number between 1-100
+
+            // pick the edge whose probability matches
+            Edge edge = null;
+            System.out.println("num: " + num);
+            for (Enumeration<Edge> e = n.getEdges().elements(); e.hasMoreElements() && num > 0; )
+                num -= (edge = e.nextElement()).getProb() * 100;
+
+            System.out.println("edge: " + edge);
+            n = edge.getNode();
+            name += n.getState(); // add the character to the name
+        }
+
+        return name.substring(0, name.length() - 1);
     }
 
     public void print() {
@@ -71,6 +89,11 @@ public class MarkovChain {
         mc.train("matt");
         mc.train("kelly");
         mc.print();
+
+        System.out.println("\n-----------------\n" + mc.generate());
+        System.out.println("\n-----------------\n" + mc.generate());
+        System.out.println("\n-----------------\n" + mc.generate());
+        System.out.println("\n-----------------\n" + mc.generate());
     }
 
 }
