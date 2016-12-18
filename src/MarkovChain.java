@@ -53,7 +53,7 @@ public class MarkovChain {
         Node n = chain.get('^'); // start at the start state
         String name = ""; // the name to generate
 
-        while (n.getState() != '$') {
+        while (true) {
             int num = r.nextInt(PROBABILITY_MULTIPLIER) + 1;
 
             // pick the edge whose probability matches
@@ -62,11 +62,41 @@ public class MarkovChain {
                 num -= (edge = e.nextElement()).getProb() * PROBABILITY_MULTIPLIER;
 
             n = edge.getNode();
-            name += n.getState(); // add the character to the name
+
+            if (n.getState() == '$')
+                if (name.length() == 1) // can't have a one character name
+                    n = chain.get(name.charAt(0)); // start again at the previous character
+                else if (everyCharIsVowel(name)) // if the name is made up of vowels
+                    n = chain.get(name.charAt(name.length() - 1)); // start again at the last character
+                else
+                    break;
+            else
+                name += n.getState(); // add the character to the name
         }
 
         // remove the ending '$'
-        return name.substring(0, name.length() - 1);
+        return name;
+    }
+
+    private boolean everyCharIsVowel(String name) {
+        for (int i = 0; i < name.length(); i++)
+            if (!isVowel(name.charAt(i)))
+                return false;
+
+        return true;
+    }
+
+    private boolean isVowel(char c) {
+        switch (c) {
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+                return true;
+        }
+
+        return false;
     }
 
     public void print() {
