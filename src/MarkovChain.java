@@ -8,6 +8,7 @@ import java.util.Random;
 public class MarkovChain {
 
     private Hashtable<Character, Node> chain;
+    private static final int PROBABILITY_MULTIPLIER = 1000000;
 
     public MarkovChain() {
         chain = new Hashtable<Character, Node>(28);
@@ -53,12 +54,12 @@ public class MarkovChain {
         String name = ""; // the name to generate
 
         while (n.getState() != '$') {
-            int num = r.nextInt(100) + 1; // generate random number between 1-100
+            int num = r.nextInt(PROBABILITY_MULTIPLIER) + 1;
 
             // pick the edge whose probability matches
             Edge edge = null;
             for (Enumeration<Edge> e = n.getEdges().elements(); e.hasMoreElements() && num > 0; )
-                num -= (edge = e.nextElement()).getProb() * 100;
+                num -= (edge = e.nextElement()).getProb() * PROBABILITY_MULTIPLIER;
 
             n = edge.getNode();
             name += n.getState(); // add the character to the name
