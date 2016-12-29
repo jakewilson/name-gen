@@ -64,9 +64,8 @@ public class MarkovChain {
             n = edge.getNode();
 
             if (n.getState() == '$')
-                if (name.length() == 1) // can't have a one character name
-                    n = chain.get(name.charAt(0)); // start again at the previous character
-                else if (everyCharIsVowel(name)) // if the name is made up of vowels
+                 // can't have a one character name or a name composed solely of vowels
+                if (name.length() == 1 || everyCharIsVowel(name))
                     n = chain.get(name.charAt(name.length() - 1)); // start again at the last character
                 else
                     break;
@@ -74,7 +73,6 @@ public class MarkovChain {
                 name += n.getState(); // add the character to the name
         }
 
-        // remove the ending '$'
         return name;
     }
 

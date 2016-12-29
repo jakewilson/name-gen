@@ -22,7 +22,7 @@ public class Node {
     public void updateProbabilities() {
         for (Enumeration<Edge> e = edges.elements(); e.hasMoreElements(); ) {
             Edge edge = e.nextElement();
-            edge.setProb(edge.getTimesSeen() / (this.numLettersSeen * 1.0f));
+            edge.setProb(edge.getTimesSeen() / (this.numLettersSeen * 1.0));
         }
     }
 
